@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modo Kiosk - Comedor IA</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #f0f0f0; }
+        .kiosk-container { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; }
+        .menu-item { background: white; margin: 10px; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 200px; cursor: pointer; }
+        .menu-item h3 { margin: 0; }
+        .menu-item p { margin: 5px 0; }
+        .menu-item button { background: #0051a8; color: white; border: none; padding: 10px; border-radius: 5px; font-size: 16px; width: 100%; }
+        .menu-item button:hover { background: #003d7a; }
+        #message { margin-top: 20px; font-size: 18px; color: green; }
+    </style>
+</head>
+<body>
+    <h1>Selecciona tu Menú</h1>
+    <div class="kiosk-container" id="menu-list"></div>
+    <p id="message"></p>
+    <script>
+        async function loadMenus() {
+            const response = await fetch('/api/menu/');
+            const menus = await response.json();
+            const menuList = document.getElementById('menu-list');
+            menuList.innerHTML = menus.map(menu => `
+                <div class="menu-item" onclick="orderMenu(${menu.id})">
+                    <h3>${menu.name}</h3>
+                    <p>${menu.description}</p>
+                    <p>Precio: $${menu.price}</p>
+                    <button>Seleccionar</button>
+                </div>
+            `).join('');
+        }
+
+        async function orderMenu(menuId) {
+            const response = await fetch('/api/orders/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ menu_id: menuId })
+            });
+            const data = await response.json();
+            document.getElementById('message').textContent = response.ok ? 'Pedido realizado con éxito' : data.message;
+            setTimeout(() => document.getElementById('message').textContent = '', 3000);
+        }
+
+        loadMenus();
+    </script>
+</body>
+</html>

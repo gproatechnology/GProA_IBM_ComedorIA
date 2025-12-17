@@ -21,14 +21,19 @@ def create_app():
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
 
+    with app.app_context():
+        db.create_all()
+
     from .blueprints.auth import auth_bp
     from .blueprints.menu import menu_bp
     from .blueprints.orders import orders_bp
     from .blueprints.reports import reports_bp
+    from .blueprints.views import views_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(menu_bp, url_prefix='/api/menu')
     app.register_blueprint(orders_bp, url_prefix='/api/orders')
     app.register_blueprint(reports_bp, url_prefix='/api/reports')
+    app.register_blueprint(views_bp)
 
     return app

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Admin - Comedor IA{% endblock %}
+
+{% block content %}
+<h2>Panel de Administración</h2>
+<div>
+    <h3>Gestionar Menús</h3>
+    <form id="menu-form">
+        <input type="text" id="menu-name" placeholder="Nombre" required>
+        <input type="text" id="menu-description" placeholder="Descripción">
+        <input type="number" id="menu-price" placeholder="Precio" step="0.01" required>
+        <input type="date" id="menu-date" required>
+        <button type="submit">Crear Menú</button>
+    </form>
+    <div id="menu-list"></div>
+</div>
+<div>
+    <h3>Reportes</h3>
+    <button onclick="loadDailyReport()">Reporte Diario</button>
+    <button onclick="loadWeeklyReport()">Reporte Semanal</button>
+    <div id="reports"></div>
+</div>
+<script>
+async function loadMenus() {
+    const response = await fetch('/api/menu/');
+    const menus = await response.json();
+    const menuList = document.getElementById('menu-list');
+    menuList.innerHTML = menus.map(menu => `
+        <div>
+            <p>${menu.name} - $${menu.price}</p>
+            <button onclick="deactivateMenu(${menu.id})">Desactivar</button>
+        </div>
+    `).join('');
+}
+
+document.getElementById('menu-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('menu-name').value;
+    const description = document.getElementById('menu-description').value;
+    const price = document.getElementById('menu-price').value;
+    const date = document.getElementById('menu-date').value;
+    await fetch('/api/menu/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, description, price: parseFloat(price), date })
+    });
+    loadMenus();
+});
+
+async function deactivateMenu(id) {
+    await fetch(`/api/menu/${id}`, { method: 'DELETE' });
+    loadMenus();
+}
+
+async function loadDailyReport() {
+    const response = await fetch('/api/reports/daily');
+    const data = await response.json();
+    document.getElementById('reports').innerHTML = data.map(d => `<p>${d.menu}: ${d.quantity}</p>`).join('');
+}
+
+async function loadWeeklyReport() {
+    const response = await fetch('/api/reports/weekly');
+    const data = await response.json();
+    document.getElementById('reports').innerHTML = data.map(d => `<p>${d.menu}: ${d.quantity}</p>`).join('');
+}
+
+loadMenus();
+</script>
+{% endblock %}
