@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modo Kiosk - Comedor IA</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #f0f0f0; }
+        .kiosk-container { display: flex; flex-wrap: wrap; justify-content: center; padding: 20px; }
+        .menu-item { background: white; margin: 10px; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 200px; cursor: pointer; }
+        .menu-item h3 { margin: 0; }
+        .menu-item p { margin: 5px 0; }
+        .menu-item button { background: #0051a8; color: white; border: none; padding: 10px; border-radius: 5px; font-size: 16px; width: 100%; }
+        .menu-item button:hover { background: #003d7a; }
+        #message { margin-top: 20px; font-size: 18px; color: green; }
+    </style>
+</head>
+<body>
+    <h1>Selecciona tu Menú</h1>
+    <div class="kiosk-container" id="menu-list">
+        <div class="menu-item">
+            <h3>Plato del Día</h3>
+            <p>Descripción del menú</p>
+            <p>Precio: $10</p>
+            <button>Seleccionar</button>
+        </div>
+        <div class="menu-item">
+            <h3>Ensalada</h3>
+            <p>Ensalada fresca</p>
+            <p>Precio: $8</p>
+            <button>Seleccionar</button>
+        </div>
+        <!-- Más menús de ejemplo -->
+    </div>
+    <p id="message">Pedido simulado realizado</p>
+    <p>Nota: Esta es una versión estática para demostración. Funcionalidad completa requiere backend.</p>
+</body>
+</html>
