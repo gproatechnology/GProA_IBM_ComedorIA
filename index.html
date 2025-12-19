@@ -1,24 +1,146 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Comedor IA - IBM</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background-color: #f4f4f4; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #0051a8; }
-        a { display: inline-block; margin: 10px; padding: 10px 20px; background: #0051a8; color: white; text-decoration: none; border-radius: 5px; }
-        a:hover { background: #003d7a; }
-    </style>
+<meta charset="UTF-8">
+<title>GProA – Smart Cafeteria Kiosk</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #0f172a;
+        color: #ffffff;
+        touch-action: manipulation;
+    }
+
+    .screen {
+        display: none;
+        height: 100vh;
+        width: 100vw;
+        padding: 40px;
+        box-sizing: border-box;
+    }
+
+    .active {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+        opacity: 0.9;
+    }
+
+    .btn {
+        background: #2563eb;
+        border: none;
+        color: white;
+        padding: 25px 40px;
+        font-size: 1.5rem;
+        border-radius: 12px;
+        margin: 15px;
+        min-width: 300px;
+        cursor: pointer;
+    }
+
+    .btn.secondary {
+        background: #334155;
+    }
+
+    .menu {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+        width: 100%;
+        max-width: 900px;
+    }
+
+    .card {
+        background: #1e293b;
+        padding: 30px;
+        border-radius: 16px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 1.3rem;
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 20px;
+        font-size: 0.9rem;
+        opacity: 0.6;
+    }
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Bienvenido al Sistema de Comedor IA</h1>
-        <p>Sistema de gestión de cafetería corporativa con asistencia AI para IBM.</p>
-        <a href="login.html">Iniciar Sesión</a>
-        <a href="kiosk.html">Modo Kiosk</a>
-        <p>Nota: Esta es una versión estática para demostración. Para funcionalidad completa, ejecuta la aplicación Flask.</p>
+
+<!-- SCREEN 1 -->
+<div id="welcome" class="screen active">
+    <h1>Smart Cafeteria Kiosk</h1>
+    <p>Select your meal in seconds</p>
+    <button class="btn" onclick="goTo('menu')">Start</button>
+    <div class="footer">Powered by GProA</div>
+</div>
+
+<!-- SCREEN 2 -->
+<div id="menu" class="screen">
+    <h1>Today's Menu</h1>
+    <div class="menu">
+        <div class="card" onclick="selectMeal('Chicken Bowl')">🥗 Chicken Bowl</div>
+        <div class="card" onclick="selectMeal('Beef Plate')">🍛 Beef Plate</div>
+        <div class="card" onclick="selectMeal('Vegetarian Option')">🥦 Vegetarian</div>
     </div>
+    <button class="btn secondary" onclick="goTo('welcome')">Back</button>
+</div>
+
+<!-- SCREEN 3 -->
+<div id="confirm" class="screen">
+    <h1>Confirm Selection</h1>
+    <p id="selectedMeal"></p>
+    <button class="btn" onclick="confirm()">Confirm</button>
+    <button class="btn secondary" onclick="goTo('menu')">Change</button>
+</div>
+
+<!-- SCREEN 4 -->
+<div id="done" class="screen">
+    <h1>Order Registered</h1>
+    <p>Thank you. Enjoy your meal.</p>
+    <button class="btn" onclick="resetKiosk()">Finish</button>
+</div>
+
+<script>
+    let meal = "";
+
+    function goTo(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+    }
+
+    function selectMeal(selected) {
+        meal = selected;
+        document.getElementById('selectedMeal').innerText = meal;
+        goTo('confirm');
+    }
+
+    function confirm() {
+        goTo('done');
+    }
+
+    function resetKiosk() {
+        meal = "";
+        goTo('welcome');
+    }
+</script>
+
 </body>
 </html>
