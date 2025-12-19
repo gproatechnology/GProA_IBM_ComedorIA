@@ -6,79 +6,100 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        background: #0f172a;
-        color: #ffffff;
-        touch-action: manipulation;
-    }
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0f172a;
+    color: #ffffff;
+    touch-action: manipulation;
+}
 
-    .screen {
-        display: none;
-        height: 100vh;
-        width: 100vw;
-        padding: 40px;
-        box-sizing: border-box;
-    }
+.screen {
+    display: none;
+    height: 100vh;
+    width: 100vw;
+    padding: 40px;
+    box-sizing: border-box;
+}
 
-    .active {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
+.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
-    h1 {
-        font-size: 3rem;
-        margin-bottom: 20px;
-    }
+h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
 
-    p {
-        font-size: 1.5rem;
-        margin-bottom: 30px;
-        opacity: 0.9;
-    }
+p {
+    font-size: 1.4rem;
+    margin-bottom: 25px;
+    opacity: 0.9;
+    text-align: center;
+}
 
-    .btn {
-        background: #2563eb;
-        border: none;
-        color: white;
-        padding: 25px 40px;
-        font-size: 1.5rem;
-        border-radius: 12px;
-        margin: 15px;
-        min-width: 300px;
-        cursor: pointer;
-    }
+.btn {
+    background: #2563eb;
+    border: none;
+    color: white;
+    padding: 22px 38px;
+    font-size: 1.4rem;
+    border-radius: 12px;
+    margin: 12px;
+    min-width: 300px;
+    cursor: pointer;
+}
 
-    .btn.secondary {
-        background: #334155;
-    }
+.btn.secondary {
+    background: #334155;
+}
 
-    .menu {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 20px;
-        width: 100%;
-        max-width: 900px;
-    }
+.menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 900px;
+}
 
-    .card {
-        background: #1e293b;
-        padding: 30px;
-        border-radius: 16px;
-        text-align: center;
-        cursor: pointer;
-        font-size: 1.3rem;
-    }
+.card {
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 1.3rem;
+}
 
-    .footer {
-        position: absolute;
-        bottom: 20px;
-        font-size: 0.9rem;
-        opacity: 0.6;
-    }
+.highlight {
+    border: 3px solid #22c55e;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    max-width: 800px;
+    width: 100%;
+}
+
+.stat-box {
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.footer {
+    position: absolute;
+    bottom: 20px;
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
 </style>
 </head>
 
@@ -87,12 +108,22 @@
 <!-- SCREEN 1 -->
 <div id="welcome" class="screen active">
     <h1>Smart Cafeteria Kiosk</h1>
-    <p>Select your meal in seconds</p>
-    <button class="btn" onclick="goTo('menu')">Start</button>
+    <p>Fast • Simple • Intelligent</p>
+    <button class="btn" onclick="goTo('ai')">Start</button>
     <div class="footer">Powered by GProA</div>
 </div>
 
-<!-- SCREEN 2 -->
+<!-- SCREEN 2 – AI RECOMMENDATION -->
+<div id="ai" class="screen">
+    <h1>AI Recommendation</h1>
+    <p>Based on today’s demand and availability, we recommend:</p>
+    <div class="card highlight" onclick="selectMeal('Chicken Bowl')">
+        🤖 Recommended: Chicken Bowl
+    </div>
+    <button class="btn secondary" onclick="goTo('menu')">View Full Menu</button>
+</div>
+
+<!-- SCREEN 3 – MENU -->
 <div id="menu" class="screen">
     <h1>Today's Menu</h1>
     <div class="menu">
@@ -100,10 +131,10 @@
         <div class="card" onclick="selectMeal('Beef Plate')">🍛 Beef Plate</div>
         <div class="card" onclick="selectMeal('Vegetarian Option')">🥦 Vegetarian</div>
     </div>
-    <button class="btn secondary" onclick="goTo('welcome')">Back</button>
+    <button class="btn secondary" onclick="goTo('welcome')">Cancel</button>
 </div>
 
-<!-- SCREEN 3 -->
+<!-- SCREEN 4 – CONFIRM -->
 <div id="confirm" class="screen">
     <h1>Confirm Selection</h1>
     <p id="selectedMeal"></p>
@@ -111,35 +142,47 @@
     <button class="btn secondary" onclick="goTo('menu')">Change</button>
 </div>
 
-<!-- SCREEN 4 -->
+<!-- SCREEN 5 – DONE -->
 <div id="done" class="screen">
     <h1>Order Registered</h1>
     <p>Thank you. Enjoy your meal.</p>
-    <button class="btn" onclick="resetKiosk()">Finish</button>
+    <button class="btn" onclick="goTo('stats')">View Statistics</button>
+</div>
+
+<!-- SCREEN 6 – STATS -->
+<div id="stats" class="screen">
+    <h1>Daily Statistics</h1>
+    <div class="stats">
+        <div class="stat-box">🥗 Chicken Bowl<br><strong>42 orders</strong></div>
+        <div class="stat-box">🍛 Beef Plate<br><strong>31 orders</strong></div>
+        <div class="stat-box">🥦 Vegetarian<br><strong>19 orders</strong></div>
+        <div class="stat-box">📊 Total Orders<br><strong>92</strong></div>
+    </div>
+    <button class="btn secondary" onclick="resetKiosk()">Finish</button>
 </div>
 
 <script>
-    let meal = "";
+let meal = "";
 
-    function goTo(screenId) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(screenId).classList.add('active');
-    }
+function goTo(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+}
 
-    function selectMeal(selected) {
-        meal = selected;
-        document.getElementById('selectedMeal').innerText = meal;
-        goTo('confirm');
-    }
+function selectMeal(selected) {
+    meal = selected;
+    document.getElementById('selectedMeal').innerText = meal;
+    goTo('confirm');
+}
 
-    function confirm() {
-        goTo('done');
-    }
+function confirm() {
+    goTo('done');
+}
 
-    function resetKiosk() {
-        meal = "";
-        goTo('welcome');
-    }
+function resetKiosk() {
+    meal = "";
+    goTo('welcome');
+}
 </script>
 
 </body>
