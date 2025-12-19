@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>GProA – Smart Cafeteria Kiosk</title>
+<title>IBM Smart Cafeteria Kiosk</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* ===== IBM STYLE ===== */
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background: #0f172a;
+    background: #0b1f33;
     color: #ffffff;
     touch-action: manipulation;
 }
@@ -30,74 +31,64 @@ body {
 }
 
 h1 {
-    font-size: 3rem;
-    margin-bottom: 15px;
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    opacity: 0.85;
 }
 
 p {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     margin-bottom: 25px;
-    opacity: 0.9;
     text-align: center;
+    opacity: 0.9;
 }
 
 .btn {
-    background: #2563eb;
+    background: #0062ff;
     border: none;
     color: white;
-    padding: 22px 38px;
+    padding: 20px 36px;
     font-size: 1.4rem;
-    border-radius: 12px;
+    border-radius: 10px;
     margin: 12px;
-    min-width: 300px;
+    min-width: 280px;
     cursor: pointer;
 }
 
 .btn.secondary {
-    background: #334155;
+    background: #3b4a5a;
 }
 
-.menu {
+.menu, .stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 20px;
     width: 100%;
     max-width: 900px;
 }
 
 .card {
-    background: #1e293b;
-    padding: 30px;
-    border-radius: 16px;
+    background: #122a44;
+    padding: 28px;
+    border-radius: 14px;
     text-align: center;
     cursor: pointer;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
-.highlight {
-    border: 3px solid #22c55e;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    max-width: 800px;
-    width: 100%;
-}
-
-.stat-box {
-    background: #1e293b;
-    padding: 30px;
-    border-radius: 16px;
-    text-align: center;
-    font-size: 1.3rem;
+.recommended {
+    border-left: 6px solid #22c55e;
 }
 
 .footer {
     position: absolute;
-    bottom: 20px;
-    font-size: 0.9rem;
+    bottom: 15px;
+    font-size: 0.85rem;
     opacity: 0.6;
 }
 </style>
@@ -105,25 +96,28 @@ p {
 
 <body>
 
-<!-- SCREEN 1 -->
+<!-- WELCOME -->
 <div id="welcome" class="screen active">
-    <h1>Smart Cafeteria Kiosk</h1>
-    <p>Fast • Simple • Intelligent</p>
+    <h1>IBM Smart Cafeteria</h1>
+    <h2>Self-Service Kiosk</h2>
     <button class="btn" onclick="goTo('ai')">Start</button>
-    <div class="footer">Powered by GProA</div>
+    <div class="footer">Solution prototype by GProA</div>
 </div>
 
-<!-- SCREEN 2 – AI RECOMMENDATION -->
+<!-- AI EXPLANATION -->
 <div id="ai" class="screen">
     <h1>AI Recommendation</h1>
-    <p>Based on today’s demand and availability, we recommend:</p>
-    <div class="card highlight" onclick="selectMeal('Chicken Bowl')">
-        🤖 Recommended: Chicken Bowl
+    <p>
+        🤖 This recommendation is generated using historical demand,
+        real-time availability, and consumption trends.
+    </p>
+    <div class="card recommended" onclick="selectMeal('Chicken Bowl')">
+        Recommended Meal<br><strong>Chicken Bowl</strong>
     </div>
-    <button class="btn secondary" onclick="goTo('menu')">View Full Menu</button>
+    <button class="btn secondary" onclick="goTo('menu')">View Menu</button>
 </div>
 
-<!-- SCREEN 3 – MENU -->
+<!-- MENU -->
 <div id="menu" class="screen">
     <h1>Today's Menu</h1>
     <div class="menu">
@@ -131,46 +125,48 @@ p {
         <div class="card" onclick="selectMeal('Beef Plate')">🍛 Beef Plate</div>
         <div class="card" onclick="selectMeal('Vegetarian Option')">🥦 Vegetarian</div>
     </div>
-    <button class="btn secondary" onclick="goTo('welcome')">Cancel</button>
 </div>
 
-<!-- SCREEN 4 – CONFIRM -->
+<!-- CONFIRM -->
 <div id="confirm" class="screen">
-    <h1>Confirm Selection</h1>
+    <h1>Confirm Order</h1>
     <p id="selectedMeal"></p>
     <button class="btn" onclick="confirm()">Confirm</button>
     <button class="btn secondary" onclick="goTo('menu')">Change</button>
 </div>
 
-<!-- SCREEN 5 – DONE -->
+<!-- DONE -->
 <div id="done" class="screen">
-    <h1>Order Registered</h1>
-    <p>Thank you. Enjoy your meal.</p>
-    <button class="btn" onclick="goTo('stats')">View Statistics</button>
+    <h1>Order Completed</h1>
+    <p>Thank you for your selection.</p>
+    <button class="btn" onclick="goTo('admin')">Admin View</button>
 </div>
 
-<!-- SCREEN 6 – STATS -->
-<div id="stats" class="screen">
-    <h1>Daily Statistics</h1>
+<!-- ADMIN DASHBOARD -->
+<div id="admin" class="screen">
+    <h1>Admin Dashboard</h1>
     <div class="stats">
-        <div class="stat-box">🥗 Chicken Bowl<br><strong>42 orders</strong></div>
-        <div class="stat-box">🍛 Beef Plate<br><strong>31 orders</strong></div>
-        <div class="stat-box">🥦 Vegetarian<br><strong>19 orders</strong></div>
-        <div class="stat-box">📊 Total Orders<br><strong>92</strong></div>
+        <div class="card">Chicken Bowl<br><strong>42 orders</strong></div>
+        <div class="card">Beef Plate<br><strong>31 orders</strong></div>
+        <div class="card">Vegetarian<br><strong>19 orders</strong></div>
+        <div class="card">Total Orders<br><strong>92</strong></div>
     </div>
-    <button class="btn secondary" onclick="resetKiosk()">Finish</button>
+    <p style="margin-top:30px;">
+        Data used by AI to optimize menus and purchasing.
+    </p>
+    <button class="btn secondary" onclick="reset()">Exit</button>
 </div>
 
 <script>
 let meal = "";
 
-function goTo(screenId) {
+function goTo(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(screenId).classList.add('active');
+    document.getElementById(id).classList.add('active');
 }
 
-function selectMeal(selected) {
-    meal = selected;
+function selectMeal(m) {
+    meal = m;
     document.getElementById('selectedMeal').innerText = meal;
     goTo('confirm');
 }
@@ -179,7 +175,7 @@ function confirm() {
     goTo('done');
 }
 
-function resetKiosk() {
+function reset() {
     meal = "";
     goTo('welcome');
 }
