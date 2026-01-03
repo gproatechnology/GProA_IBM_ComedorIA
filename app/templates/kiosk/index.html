@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Sintel · Comedor Inteligente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- CSS externo del kiosko -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/kiosk.css') }}">
+</head>
+
+<body class="kiosk-body">
+
+    <!-- Header -->
+    <header class="kiosk-header">
+        <h1 class="kiosk-title">Comedor Inteligente Sintel</h1>
+        <p class="kiosk-subtitle">Selecciona tu menú</p>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="kiosk-container">
+
+        <!-- Zona de menús -->
+        <section class="menu-list" id="menu-list">
+            <!-- 
+                Aquí el JS del kiosko renderizará dinámicamente
+                las tarjetas de menú.
+                NO se incluye lógica aquí.
+            -->
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="kiosk-footer">
+        <p>Powered by GProA Technology</p>
+    </footer>
+
+    <!-- JS del kiosko -->
+    <script src="{{ url_for('static', filename='js/kiosk.js') }}"></script>
+
+</body>
+</html>

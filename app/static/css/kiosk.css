@@ -1,0 +1,137 @@
+/* app/static/css/kiosk.css - Branding enterprise para kiosk Sintel/IBM */
+
+/* Estilos globales */
+.kiosk-body {
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+.kiosk-header {
+    background-color: #ffffff;
+    padding: 40px 20px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.kiosk-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #0051a8;
+    margin: 0 0 10px 0;
+}
+
+.kiosk-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Contenedor principal */
+.kiosk-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+/* Lista de menús */
+.menu-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Items de menú */
+.menu-item {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 200px;
+}
+
+.menu-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.menu-item h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #0051a8;
+    margin: 0 0 12px 0;
+}
+
+.menu-item p {
+    font-size: 1rem;
+    color: #666;
+    margin: 6px 0;
+    line-height: 1.5;
+}
+
+.menu-item p:last-child {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.btn-primary {
+    background-color: #0f62fe;
+    color: #ffffff;
+    border: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 20px;
+}
+
+.btn-primary:hover {
+    background-color: #0051a8;
+}
+
+.btn-primary:active {
+    background-color: #003d7a;
+    transform: scale(0.98);
+}
+
+/* Footer */
+.kiosk-footer {
+    background-color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 40px;
+}
+
+.kiosk-footer p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Mensajes de error o éxito (si se usan) */
+#message {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: #28a745;
+    text-align: center;
+}
