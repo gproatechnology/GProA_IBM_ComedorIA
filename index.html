@@ -1,230 +1,1954 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" data-bs-theme="light">
 <head>
-<meta charset="UTF-8">
-<title>IBM Smart Cafeteria Kiosk</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta: Comedor Industrial MVP | Sistema de Gestión Gourmet</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js con plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-gradient"></script>
+    
+    <!-- AOS Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <style>
+        :root {
+            /* 🎨 Paleta de Colores Culinaria Premium */
+            --appetite-orange: #e67e22;
+            --fresh-green: #27ae60;
+            --passion-red: #e74c3c;
+            --energy-yellow: #f39c12;
+            --cream-bg: #fef9f3;
+            --chocolate-brown: #5d4037;
+            --chef-blue: #3498db;
+            --berry-purple: #9b59b6;
+            --mint-fresh: #2ecc71;
+            --dark-kitchen: #2c3e50;
+            --luxury-gold: #f1c40f;
 
-<style>
-/* ===== GLOBAL / IBM STYLE ===== */
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #0b1f33;
-    color: #ffffff;
-    touch-action: manipulation;
-}
+            /* Gradientes Gourmet */
+            --primary-gradient: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            --secondary-gradient: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            --chef-gradient: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            --fresh-gradient: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            --appetite-gradient: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            --sweet-gradient: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            --ocean-gradient: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            --gold-gradient: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%);
 
-.screen {
-    display: none;
-    height: 100vh;
-    width: 100vw;
-    padding: 40px;
-    box-sizing: border-box;
-}
-
-.active {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-h1 { font-size: 2.8rem; margin-bottom: 10px; }
-h2 { font-size: 1.8rem; margin-bottom: 20px; opacity: 0.85; }
-p  { font-size: 1.3rem; margin-bottom: 25px; text-align: center; opacity: 0.9; }
-
-.btn {
-    background: #0062ff;
-    border: none;
-    color: white;
-    padding: 20px 36px;
-    font-size: 1.4rem;
-    border-radius: 10px;
-    margin: 12px;
-    min-width: 280px;
-    cursor: pointer;
-}
-
-.btn.secondary { background: #3b4a5a; }
-
-.menu, .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
-    width: 100%;
-    max-width: 900px;
-}
-
-.card {
-    background: #122a44;
-    padding: 28px;
-    border-radius: 14px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 1.2rem;
-}
-
-.recommended {
-    border-left: 6px solid #22c55e;
-}
-
-.footer {
-    position: absolute;
-    bottom: 15px;
-    font-size: 0.85rem;
-    opacity: 0.6;
-}
-
-/* ===== DASHBOARD BARS ===== */
-.bar-container {
-    background: #1b3a5b;
-    border-radius: 8px;
-    margin: 12px 0;
-    width: 100%;
-    max-width: 700px;
-    overflow: hidden;
-}
-
-.bar {
-    height: 42px;
-    background: #22c55e;
-    text-align: right;
-    padding-right: 12px;
-    line-height: 42px;
-    font-weight: bold;
-}
-</style>
+            /* Variables de diseño */
+            --border-radius-plate: 20px;
+            --border-radius-bowl: 12px;
+            --box-shadow-kitchen: 0 10px 40px rgba(230, 126, 34, 0.1);
+            --box-shadow-hover: 0 15px 50px rgba(230, 126, 34, 0.2);
+            --transition-smooth: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #fef9f3 0%, #fff5eb 100%);
+            color: var(--dark-kitchen);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Fondo gourmet con texturas */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(230, 126, 34, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(46, 204, 113, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(52, 152, 219, 0.05) 0%, transparent 50%);
+            z-index: -2;
+            pointer-events: none;
+        }
+        
+        /* Efecto de textura de chef */
+        .chef-texture {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23e67e22' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.4;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        
+        /* Header de Propuesta con efecto chef */
+        .proposal-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 4rem 0 6rem;
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        .proposal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            animation: patternMove 30s linear infinite;
+        }
+        
+        @keyframes patternMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 100px; }
+        }
+        
+        .header-chef-icon {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 15rem;
+            opacity: 0.1;
+            animation: chefFloat 8s ease-in-out infinite;
+        }
+        
+        @keyframes chefFloat {
+            0%, 100% { transform: translateY(-50%) rotate(0deg); }
+            50% { transform: translateY(-60%) rotate(5deg); }
+        }
+        
+        .badge-proposal {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: inline-block;
+            margin-bottom: 1rem;
+            animation: badgePulse 2s infinite;
+        }
+        
+        @keyframes badgePulse {
+            0%, 100% { background: rgba(255, 255, 255, 0.2); }
+            50% { background: rgba(255, 255, 255, 0.3); }
+        }
+        
+        /* Tarjetas de propuesta con efecto 3D */
+        .proposal-card {
+            background: white;
+            border-radius: var(--border-radius-plate);
+            padding: 2.5rem;
+            box-shadow: var(--box-shadow-kitchen);
+            border: 1px solid rgba(230, 126, 34, 0.1);
+            transition: var(--transition-smooth);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .proposal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary-gradient);
+        }
+        
+        .proposal-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(230, 126, 34, 0.15);
+        }
+        
+        .proposal-card-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            transition: var(--transition-smooth);
+        }
+        
+        .proposal-card:hover .proposal-card-icon {
+            transform: rotate(15deg) scale(1.1);
+        }
+        
+        /* Timeline de desarrollo */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--primary-gradient);
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.6rem;
+            top: 0.5rem;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 4px solid var(--appetite-orange);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .timeline-phase {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Gráficos gourmet */
+        .chart-gourmet-container {
+            background: white;
+            border-radius: var(--border-radius-plate);
+            padding: 2rem;
+            box-shadow: var(--box-shadow-kitchen);
+            border: 1px solid rgba(230, 126, 34, 0.1);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-gourmet-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(230, 126, 34, 0.1) 0%, transparent 70%);
+            border-radius: 0 0 0 100%;
+        }
+        
+        .chart-gourmet-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(230, 126, 34, 0.15);
+        }
+        
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--chocolate-brown);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .chart-title i {
+            color: var(--appetite-orange);
+        }
+        
+        /* Estadísticas con efecto contador */
+        .stat-counter {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Sección de tecnologías */
+        .tech-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius-bowl);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(230, 126, 34, 0.1);
+            transition: var(--transition-smooth);
+            margin: 0.5rem;
+        }
+        
+        .tech-badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(230, 126, 34, 0.1);
+            border-color: var(--appetite-orange);
+        }
+        
+        .tech-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        /* Efectos de comida flotante */
+        .food-particle {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.2;
+            animation: particleFloat 20s infinite linear;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) rotate(0deg) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        /* Sección de beneficios */
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: var(--border-radius-bowl);
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition-smooth);
+        }
+        
+        .benefit-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(230, 126, 34, 0.1);
+        }
+        
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-gradient);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        /* Footer de propuesta */
+        .proposal-footer {
+            background: var(--dark-kitchen);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 6rem;
+            clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+            position: relative;
+        }
+        
+        .proposal-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .proposal-header {
+                padding: 3rem 0 4rem;
+                clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            }
+            
+            .header-chef-icon {
+                display: none;
+            }
+            
+            .stat-counter {
+                font-size: 2.5rem;
+            }
+            
+            .proposal-card {
+                padding: 1.5rem;
+            }
+            
+            .proposal-footer {
+                clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+        
+        /* Animaciones personalizadas */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        /* Botones gourmet */
+        .btn-gourmet {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: var(--border-radius-bowl);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 10px 25px rgba(230, 126, 34, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-gourmet::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .btn-gourmet:hover::before {
+            left: 100%;
+        }
+        
+        .btn-gourmet:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(230, 126, 34, 0.4);
+        }
+        
+        /* Cards de métricas */
+        .metric-card {
+            background: white;
+            border-radius: var(--border-radius-plate);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--box-shadow-kitchen);
+            border-top: 5px solid var(--appetite-orange);
+            transition: var(--transition-smooth);
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(230, 126, 34, 0.15);
+        }
+        
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 1rem 0;
+        }
+        
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(230, 126, 34, 0.05);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #d35400 0%, #e67e22 100%);
+        }
+        
+        /* Estilos para la sección de kioscos */
+        .kiosk-card {
+            background: white;
+            border-radius: var(--border-radius-plate);
+            padding: 2.5rem;
+            box-shadow: var(--box-shadow-kitchen);
+            border: 1px solid rgba(230, 126, 34, 0.1);
+            transition: var(--transition-smooth);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            border-top: 5px solid;
+        }
+        
+        .kiosk-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(230, 126, 34, 0.2);
+        }
+        
+        .kiosk-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            transition: var(--transition-smooth);
+        }
+        
+        .kiosk-card:hover .kiosk-icon {
+            transform: rotate(15deg) scale(1.1);
+        }
+        
+        .kiosk-features {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+        
+        .kiosk-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(230, 126, 34, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .kiosk-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .kiosk-features li i {
+            color: var(--appetite-orange);
+            font-size: 1.2rem;
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Textura de fondo chef -->
+    <div class="chef-texture"></div>
+    
+    <!-- Partículas de comida flotante -->
+    <div id="food-particles"></div>
+    
+    <!-- Header Principal -->
+    <header class="proposal-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <span class="badge-proposal animate__animated animate__pulse animate__infinite">
+                        <i class="fas fa-lightbulb me-2"></i>PROPUESTA TÉCNICA
+                    </span>
+                    <h1 class="display-4 fw-bold mb-3 animate__animated animate__fadeInDown">
+                        Comedor Industrial MVP
+                    </h1>
+                    <p class="lead mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                        Sistema de Gestión Gourmet para la optimización completa de comedores industriales.
+                        <br>Reducción del 40% en desperdicios y aumento del 30% en eficiencia operativa.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                        <a href="#kioscos" class="btn-gourmet">
+                            <i class="fas fa-store me-2"></i> Ver Kioscos
+                        </a>
+                        <a href="#demostracion" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-chart-bar"></i> Ver Demostración
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="header-chef-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<!-- WELCOME -->
-<div id="welcome" class="screen active">
-    <h1>IBM Smart Cafeteria</h1>
-    <h2>Self-Service Kiosk</h2>
-    <button class="btn" onclick="goTo('ai')">Start</button>
-    <div class="footer">Prototype solution by GProA</div>
-</div>
+    <!-- Sección: Resumen Ejecutivo -->
+    <section class="py-6" id="resumen">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="display-5 fw-bold mb-3">
+                        <i class="fas fa-clipboard-check me-3" style="color: var(--appetite-orange);"></i>
+                        Resumen Ejecutivo
+                    </h2>
+                    <p class="lead text-muted mx-auto" style="max-width: 800px;">
+                        Propuesta de sistema integral para la gestión automatizada de comedores industriales,
+                        diseñado para optimizar recursos, reducir costos y mejorar la experiencia de empleados.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="proposal-card">
+                        <div class="proposal-card-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Objetivo Principal</h4>
+                        <p class="text-muted">
+                            Implementar un sistema de gestión que reduzca el desperdicio de alimentos en un 40%,
+                            optimice el inventario y mejore la satisfacción del empleado mediante menús personalizados.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="proposal-card">
+                        <div class="proposal-card-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Alcance del MVP</h4>
+                        <p class="text-muted">
+                            Sistema completo con autenticación, gestión de menús, pedidos en línea, control de inventario,
+                            reportes automatizados y dashboard administrativo en tiempo real.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="proposal-card">
+                        <div class="proposal-card-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Timeline de Implementación</h4>
+                        <p class="text-muted">
+                            6 semanas desde la aprobación hasta la puesta en producción,
+                            con entregas parciales cada 2 semanas y soporte post-implementación.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- AI RECOMMENDATION -->
-<div id="ai" class="screen">
-    <h1>AI Recommendation</h1>
-    <p>
-        🤖 Based on historical consumption, availability, and demand patterns,
-        the system suggests the most efficient meal for today.
-    </p>
+    <!-- Nueva Sección: Sistema de Kioscos -->
+    <section class="py-6 bg-light" id="kioscos">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="display-5 fw-bold mb-3">
+                        <i class="fas fa-store me-3" style="color: var(--appetite-orange);"></i>
+                        Sistema de Kioscos Digitales
+                    </h2>
+                    <p class="lead text-muted mx-auto" style="max-width: 800px;">
+                        Soluciones integrales de autoservicio que optimizan la experiencia del empleado y 
+                        reducen tiempos de espera en un 70%
+                    </p>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Kiosco 1: Pedidos Rápidos -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="kiosk-card" style="border-top-color: var(--appetite-orange);">
+                        <div class="kiosk-icon" style="background: var(--primary-gradient);">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Kiosco Express</h4>
+                        <p class="text-muted mb-4">
+                            Sistema de autoservicio rápido para pedidos preconfigurados y menús del día.
+                            Ideal para horas pico y empleados con tiempo limitado.
+                        </p>
+                        <ul class="kiosk-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Tiempo promedio: 45 segundos</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Integración con sistema central</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Pago con tarjeta corporativa</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Pantalla táctil 21" HD</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Reducción de colas: 65%</span>
+                            </li>
+                        </ul>
+                        <div class="mt-4">
+                            <span class="badge bg-success py-2 px-3">
+                                <i class="fas fa-chart-line me-1"></i> +40% eficiencia
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Kiosco 2: Personalizado -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="kiosk-card" style="border-top-color: var(--fresh-green);">
+                        <div class="kiosk-icon" style="background: var(--secondary-gradient);">
+                            <i class="fas fa-user-cog"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Kiosco Gourmet</h4>
+                        <p class="text-muted mb-4">
+                            Experiencia de pedido personalizada con recomendaciones basadas en preferencias
+                            y historial de consumo. Incluye opciones especiales dietéticas.
+                        </p>
+                        <ul class="kiosk-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Recomendaciones inteligentes</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Preferencias dietéticas</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Historial de pedidos</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Pantalla táctil 24" Full HD</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Satisfacción: 95%</span>
+                            </li>
+                        </ul>
+                        <div class="mt-4">
+                            <span class="badge bg-primary py-2 px-3">
+                                <i class="fas fa-star me-1"></i> Premium
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Kiosco 3: Móvil/Tablet -->
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="kiosk-card" style="border-top-color: var(--chef-blue);">
+                        <div class="kiosk-icon" style="background: var(--ocean-gradient);">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Kiosco Móvil</h4>
+                        <p class="text-muted mb-4">
+                            Solución portátil con tablets para servicio en mesa o áreas específicas.
+                            Perfecto para eventos corporativos y áreas de descanso.
+                        </p>
+                        <ul class="kiosk-features">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Tablets resistentes 10"</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Base de carga múltiple</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>App nativa integrada</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Autonomía 10 horas</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>Cobertura 100% área</span>
+                            </li>
+                        </ul>
+                        <div class="mt-4">
+                            <span class="badge bg-info py-2 px-3">
+                                <i class="fas fa-sync-alt me-1"></i> Flexibilidad total
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gráfico adicional para kioscos -->
+            <div class="row mt-6" data-aos="fade-up">
+                <div class="col-12">
+                    <div class="chart-gourmet-container">
+                        <h4 class="chart-title">
+                            <i class="fas fa-chart-bar"></i>
+                            Impacto de Kioscos en Tiempos de Espera
+                        </h4>
+                        <div style="height: 400px;">
+                            <canvas id="kioskImpactChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="card recommended" onclick="selectMeal('Chicken Bowl')">
-        Recommended Dish<br><strong>Chicken Bowl</strong>
-    </div>
+    <!-- Sección: Métricas Clave -->
+    <section class="py-6">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="display-5 fw-bold mb-3">
+                        <i class="fas fa-chart-pie me-3" style="color: var(--appetite-orange);"></i>
+                        Métricas de Impacto
+                    </h2>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="metric-card">
+                        <i class="fas fa-utensils fa-2x mb-3" style="color: var(--appetite-orange);"></i>
+                        <div class="metric-value">40%</div>
+                        <h5>Reducción Desperdicios</h5>
+                        <p class="text-muted small">Optimización predictiva</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="metric-card">
+                        <i class="fas fa-chart-line fa-2x mb-3" style="color: var(--fresh-green);"></i>
+                        <div class="metric-value">30%</div>
+                        <h5>Eficiencia Operativa</h5>
+                        <p class="text-muted small">Automatización procesos</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="metric-card">
+                        <i class="fas fa-smile fa-2x mb-3" style="color: var(--chef-blue);"></i>
+                        <div class="metric-value">95%</div>
+                        <h5>Satisfacción Empleados</h5>
+                        <p class="text-muted small">Menús personalizados</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 col-sm-6" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="metric-card">
+                        <i class="fas fa-money-bill-wave fa-2x mb-3" style="color: var(--berry-purple);"></i>
+                        <div class="metric-value">25%</div>
+                        <h5>Ahorro en Costos</h5>
+                        <p class="text-muted small">Optimización inventario</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <button class="btn secondary" onclick="goTo('menu')">View Full Menu</button>
-</div>
+    <!-- Sección: Gráficos Demostrativos -->
+    <section class="py-6" id="demostracion">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="display-5 fw-bold mb-3">
+                        <i class="fas fa-chart-bar me-3" style="color: var(--appetite-orange);"></i>
+                        Demostración Visual - Gráficos Interactivos
+                    </h2>
+                    <p class="lead text-muted mx-auto" style="max-width: 800px;">
+                        Visualización de datos en tiempo real y proyecciones basadas en inteligencia artificial
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Gráfico 1: Eficiencia vs Tiempo -->
+            <div class="row mb-5" data-aos="fade-up">
+                <div class="col-12">
+                    <div class="chart-gourmet-container">
+                        <h4 class="chart-title">
+                            <i class="fas fa-chart-line"></i>
+                            Proyección de Eficiencia Operativa
+                        </h4>
+                        <div style="height: 400px;">
+                            <canvas id="efficiencyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gráficos 2 y 3: Distribución -->
+            <div class="row g-4 mb-5">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="chart-gourmet-container">
+                        <h4 class="chart-title">
+                            <i class="fas fa-pie-chart"></i>
+                            Distribución de Consumo por Departamento
+                        </h4>
+                        <div style="height: 350px;">
+                            <canvas id="departmentChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="chart-gourmet-container">
+                        <h4 class="chart-title">
+                            <i class="fas fa-calendar-alt"></i>
+                            Tendencia de Pedidos Mensuales
+                        </h4>
+                        <div style="height: 350px;">
+                            <canvas id="monthlyOrdersChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gráficos 4 y 5: Comparativas -->
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="chart-gourmet-container">
+                        <h4 class="chart-title">
+                            <i class="fas fa-balance-scale"></i>
+                            Comparativa Antes/Después
+                        </h4>
+                        <div style="height: 350px;">
+                            <canvas id="comparisonChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="chart-gourmet-container">
+                        <h4 class="chart-title">
+                            <i class="fas fa-clock"></i>
+                            Horas Pico de Consumo
+                        </h4>
+                        <div style="height: 350px;">
+                            <canvas id="peakHoursChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- MENU -->
-<div id="menu" class="screen">
-    <h1>Today's Menu</h1>
-    <div class="menu">
-        <div class="card" onclick="selectMeal('Chicken Bowl')">🥗 Chicken Bowl</div>
-        <div class="card" onclick="selectMeal('Beef Plate')">🍛 Beef Plate</div>
-        <div class="card" onclick="selectMeal('Vegetarian Option')">🥦 Vegetarian</div>
-    </div>
-</div>
+    <!-- Sección: Beneficios -->
+    <section class="py-6 bg-light" id="beneficios">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="display-5 fw-bold mb-3">
+                        <i class="fas fa-medal me-3" style="color: var(--appetite-orange);"></i>
+                        Beneficios Clave del Sistema
+                    </h2>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6" data-aos="fade-up">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold">Reducción de Desperdicios</h5>
+                            <p class="text-muted mb-0">
+                                Sistema predictivo que ajusta producción según demanda real,
+                                reduciendo mermas en un 40%.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold">Eficiencia Operativa</h5>
+                            <p class="text-muted mb-0">
+                                Automatización de procesos manuales, aumentando productividad
+                                en un 30% y reduciendo errores humanos.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold">Satisfacción Empleados</h5>
+                            <p class="text-muted mb-0">
+                                Menús personalizados, pedidos anticipados y sistema de feedback
+                                en tiempo real aumentan satisfacción.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div>
+                            <h5 class="fw-bold">ROI Acelerado</h5>
+                            <p class="text-muted mb-0">
+                                Retorno de inversión en menos de 6 meses gracias a la optimización
+                                de recursos y reducción de costos.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- CONFIRM -->
-<div id="confirm" class="screen">
-    <h1>Confirm Order</h1>
-    <p id="selectedMeal"></p>
-    <button class="btn" onclick="confirmOrder()">Confirm</button>
-    <button class="btn secondary" onclick="goTo('menu')">Change</button>
-</div>
+    <!-- Sección: Tecnologías -->
+    <section class="py-6">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="display-5 fw-bold mb-3">
+                        <i class="fas fa-code me-3" style="color: var(--appetite-orange);"></i>
+                        Stack Tecnológico
+                    </h2>
+                    <p class="lead text-muted mx-auto" style="max-width: 800px;">
+                        Tecnologías modernas y robustas para garantizar escalabilidad, seguridad y rendimiento
+                    </p>
+                </div>
+            </div>
+            
+            <div class="row g-3 justify-content-center">
+                <div class="col-auto" data-aos="zoom-in">
+                    <div class="tech-badge">
+                        <div class="tech-icon">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">Python 3.11</h6>
+                            <small class="text-muted">Backend principal</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-auto" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="tech-badge">
+                        <div class="tech-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">Flask 3.0</h6>
+                            <small class="text-muted">Framework web</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-auto" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="tech-badge">
+                        <div class="tech-icon">
+                            <i class="fab fa-js"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">JavaScript ES6+</h6>
+                            <small class="text-muted">Frontend interactivo</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-auto" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="tech-badge">
+                        <div class="tech-icon">
+                            <i class="fab fa-bootstrap"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">Bootstrap 5.3</h6>
+                            <small class="text-muted">UI Framework</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-auto" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="tech-badge">
+                        <div class="tech-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">PostgreSQL</h6>
+                            <small class="text-muted">Base de datos</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- DONE -->
-<div id="done" class="screen">
-    <h1>Order Completed</h1>
-    <p>Thank you for your selection.</p>
-    <button class="btn" onclick="goTo('admin')">Admin Dashboard</button>
-</div>
+    <!-- Sección: Timeline de Desarrollo -->
+    <section class="py-6 bg-light">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="display-5 fw-bold mb-3">
+                        <i class="fas fa-road me-3" style="color: var(--appetite-orange);"></i>
+                        Fases de Desarrollo
+                    </h2>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="timeline">
+                        <div class="timeline-item" data-aos="fade-right">
+                            <span class="timeline-phase">Semana 1-2</span>
+                            <h5 class="fw-bold mb-2">Configuración y Autenticación</h5>
+                            <p class="text-muted">
+                                Estructura del proyecto, sistema de login seguro, roles de usuario
+                                y configuración de base de datos.
+                            </p>
+                        </div>
+                        
+                        <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
+                            <span class="timeline-phase">Semana 3-4</span>
+                            <h5 class="fw-bold mb-2">Core del Sistema</h5>
+                            <p class="text-muted">
+                                Módulos de gestión de menús, sistema de pedidos y control de inventario
+                                con alertas inteligentes.
+                            </p>
+                        </div>
+                        
+                        <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
+                            <span class="timeline-phase">Semana 5-6</span>
+                            <h5 class="fw-bold mb-2">Dashboard y Reportes</h5>
+                            <p class="text-muted">
+                                Dashboard interactivo, gráficos en tiempo real, reportes PDF/CSV
+                                y sistema de backup automático.
+                            </p>
+                        </div>
+                        
+                        <div class="timeline-item" data-aos="fade-right" data-aos-delay="300">
+                            <span class="timeline-phase">Semana 7-8</span>
+                            <h5 class="fw-bold mb-2">Testing y Despliegue</h5>
+                            <p class="text-muted">
+                                Pruebas integrales, optimización de rendimiento, capacitación
+                                y despliegue en producción.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- ADMIN DASHBOARD -->
-<div id="admin" class="screen">
-    <h1>Admin Dashboard</h1>
+    <!-- Sección: ROI y Costos -->
+    <section class="py-6">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center" data-aos="fade-up">
+                    <h2 class="display-5 fw-bold mb-3">
+                        <i class="fas fa-calculator me-3" style="color: var(--appetite-orange);"></i>
+                        Análisis de Retorno de Inversión
+                    </h2>
+                </div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-8" data-aos="fade-right">
+                    <div class="chart-gourmet-container">
+                        <h4 class="chart-title">
+                            <i class="fas fa-chart-area"></i>
+                            Proyección de Ahorros Anuales
+                        </h4>
+                        <div style="height: 400px;">
+                            <canvas id="roiChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4" data-aos="fade-left">
+                    <div class="proposal-card h-100">
+                        <div class="proposal-card-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Análisis Financiero</h4>
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <strong>Inversión Inicial:</strong>
+                                <span class="float-end text-success">$15,000 USD</span>
+                            </li>
+                            <li class="mb-3">
+                                <strong>Ahorro Anual Esperado:</strong>
+                                <span class="float-end text-success">$45,000 USD</span>
+                            </li>
+                            <li class="mb-3">
+                                <strong>ROI en Meses:</strong>
+                                <span class="float-end text-success">4 meses</span>
+                            </li>
+                            <li class="mb-3">
+                                <strong>Valor en 3 Años:</strong>
+                                <span class="float-end text-success">$120,000 USD</span>
+                            </li>
+                        </ul>
+                        <div class="mt-4 pt-3 border-top">
+                            <div class="d-grid">
+                                <button class="btn-gourmet" id="downloadProposal">
+                                    <i class="fas fa-download me-2"></i>
+                                    Descargar Propuesta Completa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="stats" id="statsCards"></div>
+    <!-- Footer -->
+    <footer class="proposal-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mb-4">
+                    <h3 class="fw-bold mb-3">
+                        <i class="fas fa-utensils me-2"></i>
+                        Comedor Industrial MVP
+                    </h3>
+                    <p class="mb-4" style="opacity: 0.8;">
+                        Sistema de gestión gourmet desarrollado por <strong>Sintel Team</strong>
+                        bajo la dirección de <strong>Octavio Ataíde</strong>.
+                        Transformando la gestión de comedores industriales con tecnología de vanguardia.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="btn btn-outline-light">
+                            <i class="fab fa-github me-2"></i> GitHub
+                        </a>
+                        <a href="#" class="btn btn-outline-light">
+                            <i class="fas fa-file-pdf me-2"></i> Documentación
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 mb-4">
+                    <h5 class="fw-bold mb-3">Contacto</h5>
+                    <ul class="list-unstyled" style="opacity: 0.8;">
+                        <li class="mb-2">
+                            <i class="fas fa-envelope me-2"></i>
+                            contacto@sintel.dev
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-phone me-2"></i>
+                            +52 1 234 567 8900
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            Ciudad de México, MX
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-5" style="opacity: 0.1;">
+            
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-0" style="opacity: 0.6;">
+                        © 2024 Comedor Industrial MVP. Propuesta técnica presentada por Sintel Team.
+                        Todos los derechos reservados.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-    <h2 style="margin-top:30px;">Consumption Distribution</h2>
-    <div id="bars"></div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS Animations -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Super Script con Gráficos Avanzados -->
+    <script>
+        // Inicializar AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
 
-    <p style="margin-top:25px;">
-        Data generated by kiosks feeds AI models to optimize menu planning and purchasing.
-    </p>
+        // Crear partículas de comida flotantes
+        function createFoodParticles() {
+            const container = document.getElementById('food-particles');
+            const foodIcons = ['🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🥑', '🥦', '🥕', '🌽', '🍗', '🥩', '🍤', '🥐', '🍞', '🧀', '🍕', '🌮', '🍣', '🍩', '🍪', '☕'];
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'food-particle';
+                particle.textContent = foodIcons[Math.floor(Math.random() * foodIcons.length)];
+                
+                const left = Math.random() * 100;
+                const size = Math.random() * 30 + 15;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 25 + 20;
+                const opacity = Math.random() * 0.15 + 0.05;
+                
+                particle.style.left = `${left}%`;
+                particle.style.fontSize = `${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.opacity = opacity;
+                
+                container.appendChild(particle);
+            }
+        }
 
-    <button class="btn secondary" onclick="resetApp()">Exit</button>
-</div>
+        // Gráfico 1: Eficiencia vs Tiempo
+        function createEfficiencyChart() {
+            const ctx = document.getElementById('efficiencyChart').getContext('2d');
+            
+            // Crear gradiente
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(231, 126, 34, 0.3)');
+            gradient.addColorStop(1, 'rgba(231, 126, 34, 0.05)');
+            
+            return new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    datasets: [{
+                        label: 'Eficiencia Operativa (%)',
+                        data: [65, 68, 72, 75, 78, 82, 85, 88, 90, 92, 94, 96],
+                        borderColor: '#e67e22',
+                        backgroundColor: gradient,
+                        borderWidth: 4,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#e67e22',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 3,
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 14,
+                                    family: 'Poppins'
+                                },
+                                color: '#5d4037'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(93, 64, 55, 0.9)',
+                            titleFont: {
+                                size: 14,
+                                family: 'Roboto'
+                            },
+                            bodyFont: {
+                                size: 13,
+                                family: 'Roboto'
+                            },
+                            padding: 12,
+                            cornerRadius: 8
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            min: 60,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(231, 126, 34, 0.1)'
+                            },
+                            ticks: {
+                                font: {
+                                    size: 12,
+                                    family: 'Roboto'
+                                },
+                                color: '#5d4037',
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Porcentaje de Eficiencia',
+                                font: {
+                                    size: 14,
+                                    family: 'Poppins',
+                                    weight: '600'
+                                },
+                                color: '#5d4037'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(231, 126, 34, 0.1)'
+                            },
+                            ticks: {
+                                font: {
+                                    size: 12,
+                                    family: 'Roboto'
+                                },
+                                color: '#5d4037'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Meses del Año',
+                                font: {
+                                    size: 14,
+                                    family: 'Poppins',
+                                    weight: '600'
+                                },
+                                color: '#5d4037'
+                            }
+                        }
+                    }
+                }
+            });
+        }
 
-<script>
-/* ===== DATA ===== */
-let meal = "";
-const stats = {
-    "Chicken Bowl": 0,
-    "Beef Plate": 0,
-    "Vegetarian Option": 0
-};
+        // Gráfico 2: Distribución por Departamento
+        function createDepartmentChart() {
+            const ctx = document.getElementById('departmentChart').getContext('2d');
+            
+            return new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Producción', 'Logística', 'Calidad', 'Administración', 'Ventas', 'TI'],
+                    datasets: [{
+                        data: [28, 22, 18, 15, 10, 7],
+                        backgroundColor: [
+                            '#e67e22', '#27ae60', '#3498db', '#9b59b6', '#f1c40f', '#e74c3c'
+                        ],
+                        borderColor: '#ffffff',
+                        borderWidth: 3,
+                        hoverOffset: 15
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                font: {
+                                    size: 12,
+                                    family: 'Roboto'
+                                },
+                                color: '#5d4037',
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
 
-/* ===== NAVIGATION ===== */
-function goTo(id) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    if (id === "admin") renderDashboard();
-}
+        // Gráfico 3: Pedidos Mensuales
+        function createMonthlyOrdersChart() {
+            const ctx = document.getElementById('monthlyOrdersChart').getContext('2d');
+            
+            // Crear gradiente
+            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, 'rgba(46, 204, 113, 0.3)');
+            gradient.addColorStop(1, 'rgba(46, 204, 113, 0.05)');
+            
+            return new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    datasets: [{
+                        label: 'Pedidos (Miles)',
+                        data: [4.2, 4.5, 4.8, 5.1, 5.5, 5.8, 6.2, 6.5, 6.8, 7.2, 7.5, 8.0],
+                        backgroundColor: gradient,
+                        borderColor: '#27ae60',
+                        borderWidth: 2,
+                        borderRadius: 12,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(231, 126, 34, 0.1)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + 'K';
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Cantidad de Pedidos'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
 
-/* ===== ORDER FLOW ===== */
-function selectMeal(m) {
-    meal = m;
-    document.getElementById('selectedMeal').innerText = meal;
-    goTo('confirm');
-}
+        // Gráfico 4: Comparativa Antes/Después
+        function createComparisonChart() {
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            
+            return new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Eficiencia', 'Satisfacción', 'Reducción Costos', 'Optimización', 'Control', 'Reportes'],
+                    datasets: [{
+                        label: 'Sistema Actual',
+                        data: [55, 60, 45, 50, 40, 35],
+                        backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                        borderColor: '#e74c3c',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#e74c3c'
+                    }, {
+                        label: 'Con Sistema MVP',
+                        data: [90, 95, 80, 85, 90, 95],
+                        backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                        borderColor: '#27ae60',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#27ae60'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                display: false
+                            },
+                            grid: {
+                                color: 'rgba(231, 126, 34, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 12,
+                                    family: 'Poppins'
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
 
-function confirmOrder() {
-    stats[meal]++;
-    goTo('done');
-}
+        // Gráfico 5: Horas Pico
+        function createPeakHoursChart() {
+            const ctx = document.getElementById('peakHoursChart').getContext('2d');
+            
+            // Crear gradiente
+            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, 'rgba(155, 89, 182, 0.3)');
+            gradient.addColorStop(1, 'rgba(155, 89, 182, 0.05)');
+            
+            return new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
+                    datasets: [{
+                        label: 'Consumo por Hora',
+                        data: [15, 25, 45, 60, 85, 120, 185, 160, 95, 70, 45, 25],
+                        backgroundColor: gradient,
+                        borderColor: '#9b59b6',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#9b59b6',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(231, 126, 34, 0.1)'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Cantidad de Pedidos'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(231, 126, 34, 0.1)'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Hora del Día'
+                            }
+                        }
+                    }
+                }
+            });
+        }
 
-/* ===== DASHBOARD ===== */
-function renderDashboard() {
-    const statsCards = document.getElementById("statsCards");
-    const bars = document.getElementById("bars");
+        // Gráfico 6: ROI
+        function createRoiChart() {
+            const ctx = document.getElementById('roiChart').getContext('2d');
+            
+            // Crear gradientes
+            const gradient1 = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient1.addColorStop(0, 'rgba(52, 152, 219, 0.3)');
+            gradient1.addColorStop(1, 'rgba(52, 152, 219, 0.05)');
+            
+            const gradient2 = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient2.addColorStop(0, 'rgba(46, 204, 113, 0.3)');
+            gradient2.addColorStop(1, 'rgba(46, 204, 113, 0.05)');
+            
+            return new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Mes 1', 'Mes 2', 'Mes 3', 'Mes 4', 'Mes 5', 'Mes 6', 'Mes 7', 'Mes 8', 'Mes 9', 'Mes 10', 'Mes 11', 'Mes 12'],
+                    datasets: [{
+                        label: 'Inversión',
+                        data: [15000, 2000, 1500, 1000, 500, 0, 0, 0, 0, 0, 0, 0],
+                        backgroundColor: gradient1,
+                        borderColor: '#3498db',
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }, {
+                        label: 'Ahorro',
+                        data: [0, 2000, 4500, 7500, 11000, 15000, 19500, 24500, 30000, 36000, 42500, 49500],
+                        backgroundColor: gradient2,
+                        borderColor: '#27ae60',
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(231, 126, 34, 0.1)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'USD ($)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
 
-    statsCards.innerHTML = "";
-    bars.innerHTML = "";
+        // Nuevo Gráfico 7: Impacto de Kioscos
+        function createKioskImpactChart() {
+            const ctx = document.getElementById('kioskImpactChart').getContext('2d');
+            
+            // Crear gradiente
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(155, 89, 182, 0.3)');
+            gradient.addColorStop(1, 'rgba(155, 89, 182, 0.05)');
+            
+            return new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Express', 'Gourmet', 'Móvil', 'Sistema Tradicional'],
+                    datasets: [{
+                        label: 'Tiempo Promedio de Espera (minutos)',
+                        data: [0.75, 1.5, 1.2, 8.5],
+                        backgroundColor: [
+                            'rgba(231, 126, 34, 0.8)',
+                            'rgba(46, 204, 113, 0.8)',
+                            'rgba(52, 152, 219, 0.8)',
+                            'rgba(231, 76, 60, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgb(231, 126, 34)',
+                            'rgb(46, 204, 113)',
+                            'rgb(52, 152, 219)',
+                            'rgb(231, 76, 60)'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 12
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw} minutos`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(231, 126, 34, 0.1)'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Minutos de Espera'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return value + ' min';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
 
-    const total = Object.values(stats).reduce((a, b) => a + b, 0) || 1;
+        // Inicializar todos los gráficos cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Crear partículas
+            createFoodParticles();
+            
+            // Crear gráficos
+            const charts = {
+                efficiency: createEfficiencyChart(),
+                department: createDepartmentChart(),
+                monthlyOrders: createMonthlyOrdersChart(),
+                comparison: createComparisonChart(),
+                peakHours: createPeakHoursChart(),
+                roi: createRoiChart(),
+                kioskImpact: createKioskImpactChart()
+            };
+            
+            // Efecto de contador en métricas
+            const counters = document.querySelectorAll('.stat-counter, .metric-value');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace('%', '').replace('$', '').replace(',', ''));
+                const increment = target / 100;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (current > target) current = target;
+                        
+                        const displayValue = counter.classList.contains('metric-value') 
+                            ? Math.floor(current)
+                            : current.toFixed(1);
+                        
+                        counter.textContent = counter.textContent.includes('%') 
+                            ? displayValue + '%'
+                            : counter.textContent.includes('$')
+                            ? '$' + Math.floor(current).toLocaleString()
+                            : displayValue;
+                        
+                        requestAnimationFrame(updateCounter);
+                    }
+                };
+                
+                // Iniciar cuando sea visible
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            updateCounter();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+                
+                observer.observe(counter);
+            });
+            
+            // Botón de descarga
+            document.getElementById('downloadProposal').addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Generando PDF...';
+                this.disabled = true;
+                
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-check me-2"></i> Propuesta Descargada';
+                    alert('Propuesta descargada exitosamente (simulación)');
+                }, 2000);
+            });
+            
+            // Efecto scroll suave
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Actualizar gráficos al redimensionar
+            window.addEventListener('resize', function() {
+                Object.values(charts).forEach(chart => {
+                    if (chart && typeof chart.resize === 'function') {
+                        chart.resize();
+                    }
+                });
+            });
+        });
 
-    for (const [dish, count] of Object.entries(stats)) {
-
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `${dish}<br><strong>${count} orders</strong>`;
-        statsCards.appendChild(card);
-
-        const percent = Math.round((count / total) * 100);
-        const barContainer = document.createElement("div");
-        barContainer.className = "bar-container";
-        barContainer.innerHTML = `
-            <div class="bar" style="width:${percent}%">
-                ${percent}%
-            </div>`;
-        bars.appendChild(barContainer);
-    }
-}
-
-/* ===== RESET ===== */
-function resetApp() {
-    meal = "";
-    goTo('welcome');
-}
-</script>
-
+        // Efecto de scroll para header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.proposal-header');
+            const scrollPosition = window.scrollY;
+            
+            if (scrollPosition > 100) {
+                header.style.transform = `translateY(${scrollPosition * 0.05}px)`;
+                header.style.opacity = 1 - (scrollPosition * 0.001);
+            }
+        });
+    </script>
 </body>
 </html>
