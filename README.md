@@ -9,9 +9,9 @@ Esta propuesta técnica presenta un sistema integral de gestión automatizada pa
 ## ✨ Características Principales
 
 - **Sistema de Kioscos Digitales**: Tres opciones de kioscos (Esencial, Avanzado, Enterprise) con imágenes ilustrativas
+- **Sistema de Roles y Autenticación**: Logging simulado para Comensal, Chef y RH
 - **Gestión Predictiva de Inventario**: Reducción del 40% en desperdicios alimentarios
 - **Dashboard en Tiempo Real**: Visualización de métricas y reportes interactivos
-- **Autenticación Segura**: Sistema de roles y permisos
 - **Análisis de Datos**: Gráficos y proyecciones basadas en IA
 
 ## 🏗️ Estructura del Proyecto
@@ -72,6 +72,25 @@ Experiencia personalizada con preferencias dietéticas e historial de consumo.
 
 ### Kiosko Op3 · Enterprise ($200,000 MXN + IVA)
 Plataforma completa con IA, dashboards en tiempo real e integración ERP.
+
+## 👥 Sistema de Roles de Usuario
+
+La aplicación incluye un sistema de logging simulado con tres roles principales:
+
+### Comensal
+- **Acceso**: Básico para empleados
+- **Funciones**: Realizar pedidos, ver menú del día, consultar historial personal
+- **Permisos**: Lectura de menús, pedidos en línea
+
+### Chef
+- **Acceso**: Intermedio para personal de cocina
+- **Funciones**: Gestión de menús, control de inventario, preparación de alimentos
+- **Permisos**: Modificación de menús, alertas de inventario, reportes de producción
+
+### Recursos Humanos (RH)
+- **Acceso**: Máximo control administrativo
+- **Funciones**: Dashboards completos, configuración del sistema, reportes avanzados
+- **Permisos**: Control total, gestión de usuarios, configuración enterprise
 
 ## 📈 Gráficos Interactivos
 

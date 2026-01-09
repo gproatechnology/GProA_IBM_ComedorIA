@@ -606,6 +606,29 @@
             color: var(--appetite-orange);
             font-size: 1.2rem;
         }
+
+        /* Estilos para el sistema de roles */
+        .role-card {
+            background: white;
+            border: 2px solid rgba(230, 126, 34, 0.1) !important;
+            transition: all 0.3s ease;
+        }
+
+        .role-card:hover {
+            border-color: var(--appetite-orange) !important;
+            box-shadow: 0 5px 15px rgba(230, 126, 34, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .role-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(230, 126, 34, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -637,6 +660,9 @@
                         <a href="#demostracion" class="btn btn-outline-light btn-lg">
                             <i class="fas fa-chart-bar"></i> Ver Demostración
                         </a>
+                        <button class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                        </button>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -742,7 +768,7 @@
                     <ul class="kiosk-features">
                         <li><i class="fas fa-check-circle"></i><span>Selección de menú del día</span></li>
                         <li><i class="fas fa-check-circle"></i><span>Pedidos rápidos sin personalización</span></li>
-                        <li><i class="fas fa-check-circle"></i><span>Pantalla táctil 21” HD</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Pantalla táctil Genérica 21” </span></li>
                         <li><i class="fas fa-check-circle"></i><span>Integración básica con backend</span></li>
                         <li><i class="fas fa-check-circle"></i><span>Optimizado para horas pico</span></li>
                     </ul>
@@ -751,7 +777,7 @@
                         <span class="badge bg-success py-2 px-3">
                             <i class="fas fa-stopwatch me-1"></i> Operación ágil
                         </span>
-                        <span class="fw-bold text-dark">$90,000 MXN + IVA</span>
+                        <span class="fw-bold text-dark">Solicitar Cotización Opción 1</span>
                     </div>
                 </div>
             </div>
@@ -776,14 +802,14 @@
                         <li><i class="fas fa-check-circle"></i><span>Personalización de pedidos</span></li>
                         <li><i class="fas fa-check-circle"></i><span>Preferencias dietéticas</span></li>
                         <li><i class="fas fa-check-circle"></i><span>Historial de consumo</span></li>
-                        <li><i class="fas fa-check-circle"></i><span>Pantalla táctil 24” Full HD</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Pantalla táctil Grado Industrial 24” HD</span></li>
                     </ul>
 
                     <div class="mt-4 d-flex justify-content-between align-items-center">
                         <span class="badge bg-primary py-2 px-3">
                             <i class="fas fa-chart-line me-1"></i> Mayor control
                         </span>
-                        <span class="fw-bold text-dark">$130,000 MXN + IVA</span>
+                        <span class="fw-bold text-dark">Solicitar Cotización Opción 2</span>
                     </div>
                 </div>
             </div>
@@ -805,6 +831,7 @@
 
                     <ul class="kiosk-features">
                         <li><i class="fas fa-check-circle"></i><span>Todo lo incluido en Op2</span></li>
+                        <li><i class="fas fa-check-circle"></i><span>Pantalla táctil Grado Industrial Coated 24”  Full HD</span></li>
                         <li><i class="fas fa-check-circle"></i><span>Recomendaciones con IA</span></li>
                         <li><i class="fas fa-check-circle"></i><span>Dashboards y reportes en tiempo real</span></li>
                         <li><i class="fas fa-check-circle"></i><span>Integración ERP / RH / BI</span></li>
@@ -815,7 +842,7 @@
                         <span class="badge bg-dark py-2 px-3">
                             <i class="fas fa-crown me-1"></i> Nivel corporativo
                         </span>
-                        <span class="fw-bold text-dark">$200,000 MXN + IVA</span>
+                        <span class="fw-bold text-dark">Solicitar Cotización Opción 3</span>
                     </div>
                 </div>
             </div>
@@ -1764,7 +1791,7 @@
                     labels: ['Opción 1', 'Opción 2', 'Opción 3', 'Método Tradicional'],
                     datasets: [{
                         label: 'Tiempo Promedio de Espera (minutos)',
-                        data: [0.75, 1.5, 1.2, 8.5],
+                        data: [5.75, 4.5, 3.2, 8.5],
                         backgroundColor: [
                             'rgba(231, 126, 34, 0.8)',
                             'rgba(46, 204, 113, 0.8)',
@@ -1923,6 +1950,188 @@
                 header.style.opacity = 1 - (scrollPosition * 0.001);
             }
         });
+
+        // Sistema de Logging Simulado
+        let currentUser = null;
+
+        function loginAs(role) {
+            currentUser = role;
+            const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+            modal.hide();
+
+            // Actualizar UI según rol
+            updateUIForRole(role);
+
+            // Mostrar notificación
+            showLoginNotification(role);
+        }
+
+        function updateUIForRole(role) {
+            const header = document.querySelector('.proposal-header');
+            let roleInfo = '';
+
+            switch(role) {
+                case 'comensal':
+                    roleInfo = '<div class="alert alert-info position-fixed top-0 end-0 m-3" style="z-index: 9999;" id="roleIndicator"><i class="fas fa-user me-2"></i>Conectado como: <strong>Comensal</strong> - Acceso básico a pedidos</div>';
+                    break;
+                case 'chef':
+                    roleInfo = '<div class="alert alert-warning position-fixed top-0 end-0 m-3" style="z-index: 9999;" id="roleIndicator"><i class="fas fa-utensils me-2"></i>Conectado como: <strong>Chef</strong> - Gestión de menús e inventario</div>';
+                    break;
+                case 'rh':
+                    roleInfo = '<div class="alert alert-danger position-fixed top-0 end-0 m-3" style="z-index: 9999;" id="roleIndicator"><i class="fas fa-crown me-2"></i>Conectado como: <strong>RH</strong> - Control total del sistema</div>';
+                    break;
+            }
+
+            // Remover indicador anterior si existe
+            const existingIndicator = document.getElementById('roleIndicator');
+            if (existingIndicator) {
+                existingIndicator.remove();
+            }
+
+            // Agregar nuevo indicador
+            document.body.insertAdjacentHTML('beforeend', roleInfo);
+
+            // Auto-remover después de 5 segundos
+            setTimeout(() => {
+                const indicator = document.getElementById('roleIndicator');
+                if (indicator) {
+                    indicator.remove();
+                }
+            }, 5000);
+        }
+
+        function showLoginNotification(role) {
+            const roleNames = {
+                'comensal': 'Comensal',
+                'chef': 'Chef',
+                'rh': 'Recursos Humanos'
+            };
+
+            // Crear notificación toast
+            const toastHtml = `
+                <div class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3" style="z-index: 9999;" role="alert">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="fas fa-check-circle me-2"></i>
+                            ¡Bienvenido! Has iniciado sesión como <strong>${roleNames[role]}</strong>
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            `;
+
+            document.body.insertAdjacentHTML('beforeend', toastHtml);
+            const toast = new bootstrap.Toast(document.querySelector('.toast:last-child'));
+            toast.show();
+
+            // Remover toast después de mostrar
+            setTimeout(() => {
+                document.querySelector('.toast:last-child').remove();
+            }, 4000);
+        }
+
+        function logout() {
+            currentUser = null;
+            const indicator = document.getElementById('roleIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+
+            // Notificación de logout
+            const toastHtml = `
+                <div class="toast align-items-center text-white bg-secondary border-0 position-fixed top-0 end-0 m-3" style="z-index: 9999;" role="alert">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="fas fa-sign-out-alt me-2"></i>
+                            Sesión cerrada exitosamente
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            `;
+
+            document.body.insertAdjacentHTML('beforeend', toastHtml);
+            const toast = new bootstrap.Toast(document.querySelector('.toast:last-child'));
+            toast.show();
+
+            setTimeout(() => {
+                document.querySelector('.toast:last-child').remove();
+            }, 3000);
+        }
     </script>
+
+    <!-- Modal de Login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="background: linear-gradient(135deg, #fef9f3 0%, #fff5eb 100%); border: 2px solid var(--appetite-orange);">
+                <div class="modal-header" style="border-bottom: 2px solid var(--appetite-orange);">
+                    <h5 class="modal-title fw-bold" id="loginModalLabel" style="color: var(--chocolate-brown);">
+                        <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión - Sistema Comedor IA
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted mb-4">Selecciona tu rol para acceder al sistema:</p>
+
+                    <div class="row g-3">
+                        <!-- Rol Comensal -->
+                        <div class="col-12">
+                            <div class="role-card p-3 border rounded" style="cursor: pointer; transition: all 0.3s ease;" onclick="loginAs('comensal')">
+                                <div class="d-flex align-items-center">
+                                    <div class="role-icon me-3">
+                                        <i class="fas fa-user fa-2x" style="color: var(--appetite-orange);"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="fw-bold mb-1" style="color: var(--chocolate-brown);">Comensal</h6>
+                                        <p class="small text-muted mb-0">Acceso básico para realizar pedidos y ver menú del día</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right" style="color: var(--appetite-orange);"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rol Chef -->
+                        <div class="col-12">
+                            <div class="role-card p-3 border rounded" style="cursor: pointer; transition: all 0.3s ease;" onclick="loginAs('chef')">
+                                <div class="d-flex align-items-center">
+                                    <div class="role-icon me-3">
+                                        <i class="fas fa-utensils fa-2x" style="color: var(--fresh-green);"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="fw-bold mb-1" style="color: var(--chocolate-brown);">Chef</h6>
+                                        <p class="small text-muted mb-0">Gestión completa de menús, inventario y preparación</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right" style="color: var(--fresh-green);"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Rol RH -->
+                        <div class="col-12">
+                            <div class="role-card p-3 border rounded" style="cursor: pointer; transition: all 0.3s ease;" onclick="loginAs('rh')">
+                                <div class="d-flex align-items-center">
+                                    <div class="role-icon me-3">
+                                        <i class="fas fa-crown fa-2x" style="color: var(--chef-blue);"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="fw-bold mb-1" style="color: var(--chocolate-brown);">Recursos Humanos</h6>
+                                        <p class="small text-muted mb-0">Control total: dashboards, reportes, configuración y administración</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right" style="color: var(--chef-blue);"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top">
+                        <small class="text-muted">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Este es un sistema de demostración. En producción, incluiría autenticación real con credenciales seguras.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
