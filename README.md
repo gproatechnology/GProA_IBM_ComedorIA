@@ -1,50 +1,102 @@
-# Sistema de Comedor IA - IBM
+# Comedor Industrial MVP
 
-MVP de un sistema de gestión de cafetería corporativa con asistencia AI para entornos IBM.
+Sistema de Gestión Gourmet para la optimización completa de comedores industriales. Reducción del 40% en desperdicios y aumento del 30% en eficiencia operativa.
 
-## Arquitectura
+## 📋 Descripción
 
-- **Backend**: Flask con Blueprints, SQLAlchemy, PostgreSQL.
-- **Frontend**: HTML5/CSS3/JS vanilla, responsivo y optimizado para kioscos.
-- **Autenticación**: Role-based (admin, employee, kiosk) con Flask-Login.
-- **AI**: Stub service para futuras integraciones (IBM watsonx).
+Esta propuesta técnica presenta un sistema integral de gestión automatizada para comedores industriales, diseñado para optimizar recursos, reducir costos y mejorar la experiencia de empleados mediante menús personalizados y kioscos digitales de autoservicio.
 
-## Instalación
+## ✨ Características Principales
 
-1. Clona el repo: `git clone https://github.com/gproatechnology/GProA_IBM_ComedorIA.git`
-2. Crea un entorno virtual: `python -m venv venv`
-3. Activa: `source venv/bin/activate` (Linux/Mac) o `venv\Scripts\activate` (Windows)
-4. Instala dependencias: `pip install -r requirements.txt`
-5. Configura variables de entorno en `.env`:
+- **Sistema de Kioscos Digitales**: Tres opciones de kioscos (Esencial, Avanzado, Enterprise) con imágenes ilustrativas
+- **Gestión Predictiva de Inventario**: Reducción del 40% en desperdicios alimentarios
+- **Dashboard en Tiempo Real**: Visualización de métricas y reportes interactivos
+- **Autenticación Segura**: Sistema de roles y permisos
+- **Análisis de Datos**: Gráficos y proyecciones basadas en IA
+
+## 🏗️ Estructura del Proyecto
+
+```
+GProA_IBM_ComedorIA/
+├── index.html                 # Página principal de la propuesta
+├── LICENSE                    # Licencia del proyecto
+├── README.md                  # Este archivo
+└── assets/
+    └── images/
+        └── kioskos/
+            ├── opcion1/
+            │   └── op1.jpeg   # Imagen del Kiosko Esencial
+            ├── opcion2/
+            │   └── op2.jpeg   # Imagen del Kiosko Avanzado
+            └── opcion3/
+                └── op3.jpeg   # Imagen del Kiosko Enterprise
+```
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Frontend**: HTML5, CSS3, JavaScript ES6+
+- **Frameworks**: Bootstrap 5.3, Chart.js
+- **Animaciones**: AOS, Animate.css
+- **Iconos**: Font Awesome 6.5.1
+- **Fuentes**: Google Fonts (Poppins, Roboto)
+
+## 🚀 Instalación y Uso
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tu-usuario/GProA_IBM_ComedorIA.git
    ```
-   SECRET_KEY=tu_clave_secreta
-   DATABASE_URL=postgresql://user:password@localhost/comedor_db
-   DEBUG=True
+
+2. Navega al directorio del proyecto:
+   ```bash
+   cd GProA_IBM_ComedorIA
    ```
-6. Inicializa DB: `flask db init` (si usas Flask-Migrate), o ejecuta `python run.py` para crear tablas automáticamente.
 
-## Ejecución Local
+3. Abre `index.html` en tu navegador web preferido.
 
-- `python run.py`
-- Accede a http://localhost:5000
+## 📊 Métricas de Impacto
 
-## Despliegue
+- **40%** Reducción en desperdicios
+- **30%** Aumento en eficiencia operativa
+- **95%** Satisfacción de empleados
+- **25%** Ahorro en costos
+- **4 meses** ROI (Retorno de Inversión)
 
-- **Local**: Usa Flask dev server.
-- **Producción**: Gunicorn + Nginx, PostgreSQL en cloud.
-- **Kioscos**: Navegadores en modo fullscreen.
+## 💼 Sistema de Kioscos
 
-## Uso
+### Kiosko Op1 · Esencial ($90,000 MXN + IVA)
+Sistema básico de autoservicio para pedidos rápidos y operación eficiente en horas pico.
 
-- **Empleados**: Login → Dashboard → Seleccionar menú.
-- **Admins**: Login → Admin panel → Gestionar menús, ver reportes.
-- **Kiosk**: /kiosk → Seleccionar menú sin login.
+### Kiosko Op2 · Avanzado ($130,000 MXN + IVA)
+Experiencia personalizada con preferencias dietéticas e historial de consumo.
 
-## Extensión
+### Kiosko Op3 · Enterprise ($200,000 MXN + IVA)
+Plataforma completa con IA, dashboards en tiempo real e integración ERP.
 
-- AI: Implementar en `app/services/ai_service.py` para recomendaciones.
-- Más features: Agregar Blueprints nuevos siguiendo la estructura.
+## 📈 Gráficos Interactivos
 
-## Licencia
+La propuesta incluye visualizaciones de:
+- Proyección de eficiencia operativa
+- Distribución de consumo por departamento
+- Tendencia de pedidos mensuales
+- Comparativa antes/después
+- Horas pico de consumo
+- Análisis de ROI
 
-Ver LICENSE.
+## 👥 Equipo
+
+Desarrollado por **Sintel Team** bajo la dirección de **Octavio Ataíde**.
+
+## 📞 Contacto
+
+- **Email**: contacto@sintel.dev
+- **Teléfono**: +52 1 234 567 8900
+- **Ubicación**: Ciudad de México, MX
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+
+---
+
+*Propuesta técnica presentada por Sintel Team - Transformando la gestión de comedores industriales con tecnología de vanguardia.*
